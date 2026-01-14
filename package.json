@@ -1,0 +1,26 @@
+{
+  "name": "book-record-manager",
+  "version": "1.0.0",
+  "description": "Library System",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HimadriAich/Book-Record-Manager.git"
+  },
+  "author": "Himadri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HimadriAich/Book-Record-Manager/issues"
+  },
+  "homepage": "https://github.com/HimadriAich/Book-Record-Manager#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

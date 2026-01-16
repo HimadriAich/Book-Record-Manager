@@ -49,7 +49,7 @@ missed by both renewal date and subsciption>> 100+50=150/-
 ## (1) /users- in order for a student/user to register
 
 POST: Create a new user
-GET: Get all the user information here
+GET: Get all the users
 
 ## (2) /users/{id}- for specific user (using his or her student id)
 
@@ -84,3 +84,19 @@ GET: Get all issued books with their fines
 ## npm i nodemon --save-dev (developers dependencies)
 
 ## npm run dev
+
+
+each
+"name": "Jane",
+        "surname": "Doe",
+        "email": "user@email.com",
+        "subscriptionType": "Premium",
+        "subscriptionDate": "01/01/2025"
+
+
+
+data
+"data":  {
+  "name": "rohan",
+  "surname": "kinnal"
+}

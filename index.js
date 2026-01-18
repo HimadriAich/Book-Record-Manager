@@ -184,7 +184,7 @@ app.delete("/users/:id", (req, res) => {   // Route handler for DELETE /users/:i
 
 // else, delete the user
     const index = users.indexOf(user); // Finding the index of the user to be deleted
-    users.splice(index, 1); // Removing the user from the users array
+    users.splice(index, 1); // Removing the user from the users arrayc
 });
 
 

@@ -101,11 +101,13 @@ data
   "surname": "kinnal"
 }
 
- const index = users.indexOf(user); // Finding the index of the user to be deleted
-    users.splice(index, 1); // Removing the user from the users array
+******************************************************
+ const index = users.indexOf(user); 
+ users.splice(index, 1); 
 
-
-
+var class = ["six","seven","eight"];
+indexOf()
+class.indexOf("seven")
 
 
 

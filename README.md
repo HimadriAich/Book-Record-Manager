@@ -86,7 +86,7 @@ GET: Get all issued books with their fines
 ## npm run dev
 
 
-each
+...each
 "name": "Jane",
         "surname": "Doe",
         "email": "user@email.com",
@@ -95,7 +95,7 @@ each
 
 
 
-data
+...data
 "data":  {
   "name": "rohan",
   "surname": "kinnal"

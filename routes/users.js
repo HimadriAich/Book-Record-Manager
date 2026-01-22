@@ -2,8 +2,8 @@ const express = require("express");
 const { users } = require("../data/users.json"); // Importing users data from JSON file
 const router = express.Router(); // Creating a new router instance for user routes, this is done because we are creating routes in this file
 // Vimp: we use express.Router() to create a new router object that can handle routes separately from the main app
-
-
+ 
+/********************************************** */
 /*
 * Route: /                 //route to get all users
 * Method: GET             //HTTP GET method to retrieve data 
@@ -124,7 +124,7 @@ router.put("/:id", (req, res) => {   // Route handler for PUT /users/:id
   }
 
 // else, update the user
-  const updateUserData = users.map((each) => {  // Mroutering through the users array to update the specific user
+  const updateUserData = users.map((each) => {  // routering through the users array to update the specific user
     if (each.id === id) {
       return {
         ...each,   // Spread operator to retain existing user properties
@@ -176,5 +176,55 @@ router.delete("/:id", (req, res) => {   // Route handler for DELETE /users/:id
         data: users,   // Sending the updated users array as response
     });
   });
+/************************************************* */
+/*  VERY IMPORTANT- GET ALL USER SUBSCRIPTION DETAILS  
+* Route: /users/subscription-details/:id                //  route to get a user's subscription details by ID
+* Method: GET            // HTTP GET method to retrieve data
+* Description:        Getting a user's subscription details     //fetching a user's subscription details in the data source
+* Access: Public         // no authentication needed
+* Parameters: id   //parameter needed to get a user's subscription details
+*/
 
+router.get("/subscription-details/:id", (req, res) => {   // Route handler for GET /users/subscription-details/:id
+
+    const { id } = req.params; // Extracting the 'id' parameter from the request URL
+    const user = users.find((each) => each.id === id); // Finding the user with the matching ID in the users array
+// Vimp: here each represents each user object in the users array, 'each' is ajust a variable name, can be anything
+  
+  if (!user) {   // if user not found
+    return res.status(404).json({
+      // Sending a JSON response with status 404
+        success: false,       // Indicating the request was unsuccessful
+        message: `User with id ${id} not found`,
+    });
+    }
+  // else, user found
+  const getDateInDays = (data = "") => { // Function to convert date to days 
+
+    let date;
+    if (data === "") {
+      date = new Date(); // Current date if no date is provided
+    } else {
+      date = new Date(data); // Converting provided date string to Date object
+    }
+
+    let days = Math.floor(date / (1000 * 60 * 60 * 24)); // Converting milliseconds to days, floor method means rounding off to nearest integer(floor of 4.7 is 4)
+  // 1000*60*60*24 means milliseconds in a day
+    return days;
+  }; 
+
+  const subscriptionType = (data) => {  // Function to determine subscription type based on subscription duration
+    if (user.subscriptionType === "Basic") {
+      date = date + 90; // Basic subscription lasts for 90 days
+    }
+    else if (user.subscriptionType === "Standard") {
+      date = date + 180; // Standard subscription lasts for 180 days
+    }
+    else if (user.subscriptionType === "Premium") {
+      date = date + 365; // Premium subscription lasts for 365 days
+    }
+  }; 
+  
+});
+/************************************************* */
   module.exports = router;   // Exporting the router to be used in other files

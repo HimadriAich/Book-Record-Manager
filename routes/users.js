@@ -187,8 +187,10 @@ router.delete("/:id", (req, res) => {   // Route handler for DELETE /users/:id
 
 router.get("/subscription-details/:id", (req, res) => {   // Route handler for GET /users/subscription-details/:id
 
-    const { id } = req.params; // Extracting the 'id' parameter from the request URL
+    const { id } = req.params; // Extracting the 'id' parameter from the request URL, curly braces used for destructuring(means extracting specific value from an object)
     const user = users.find((each) => each.id === id); // Finding the user with the matching ID in the users array
+    // No curlybraces around user in above line because we are returning the whole user object, not extracting any specific property from it
+    // here user refers to the user object(containing id, name, surname etc.) found with the matching ID
 // Vimp: here each represents each user object in the users array, 'each' is ajust a variable name, can be anything
   
   if (!user) {   // if user not found
@@ -213,7 +215,7 @@ router.get("/subscription-details/:id", (req, res) => {   // Route handler for G
     return days;
   }; 
 
-  const subscriptionType = (data) => {  // Function to determine subscription type based on subscription duration
+  const subscriptionType = (date) => {  // Function to determine subscription type based on subscription duration
     if (user.subscriptionType === "Basic") {
       date = date + 90; // Basic subscription lasts for 90 days
     }
@@ -223,8 +225,34 @@ router.get("/subscription-details/:id", (req, res) => {   // Route handler for G
     else if (user.subscriptionType === "Premium") {
       date = date + 365; // Premium subscription lasts for 365 days
     }
+    return date;
   }; 
+
+  //Jan 01 1970 is the starting date for javascript date object
+  let returnDate = getDateInDays(user.returnDate); // Converting return date to days
+  let currentDate = getDateInDays(); // Converting current date to days,   we need currentDate if there is any fine or not
+
+  let subscriptionDate = getDateInDays(user.subscriptionDate); // Converting subscription date to days
   
+  let subscriptionExpiration = subscriptionType(subscriptionDate); // Calculating subscription expiration date in days
+  //in the aboveline we are basically passing subscriptionDate to subscriptionType function which will return the expiration date based on the type of subscription
+
+  const dt = {   // Vimp: creating an object dt to hold all the date related info
+    ...user,   // Spread operator to include all user properties
+    isSubscriptionExpired : subscriptionExpiration <= currentDate, // Checking if subscription has expired
+    // if subscriptionExpiration is less than currentDate, then subscription has expired
+
+    daysLeftForExpiration : subscriptionExpiration <= currentDate ? 0 : subscriptionExpiration - currentDate, // Calculating days left for subscription expiration
+  
+    fine : returnDate < currentDate ? subscriptionExpiration <= currentDate ? 100 : 50 : 0, // Calculating fine based on return date and subscription status
+  };
+// in above line, if returnDate is less than currentDate, then check if subscription has expired, if yes fine is 100, else fine is 50, else fine is 0
+
+  return res.status(200).json({   // Sending a JSON response with status 200
+        success: true,
+        message: "User subscription details fetched successfully!!",
+        data: dt,   // Sending the subscription details as response
+    });
 });
 /************************************************* */
   module.exports = router;   // Exporting the router to be used in other files

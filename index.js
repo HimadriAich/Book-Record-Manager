@@ -1,13 +1,18 @@
 const express = require("express"); // Importing Express framework
 
+const dotenv = require("dotenv"); // Importing dotenv for environment variable management
 
+const DbConnection = require("./databaseConnection.js"); // Importing database connection module
 /********************************************** */
 const userRouter =require("./routes/users.js"); // Importing user routes from external file
 const booksRouter =require("./routes/books.js"); // Importing book routes from external file
 /********************************************** */
 
+dotenv.config(); // Loading environment variables from .env file
 
 const app = express(); // Creating an Express application instance
+
+DbConnection(); // Establishing database connection
 
 const PORT = 8081; // Defining the port number for the server to listen on
 

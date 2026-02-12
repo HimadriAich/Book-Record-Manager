@@ -1,8 +1,16 @@
 const express = require("express");
 const {books} = require("../data/books.json"); // Importing books data from JSON file
 
+const {getAllBooks, getSingleBookById, getAllIssuedBooks} = require("../controllers/book-controller"); // Importing these function from book-controller.js file
+
+
 const {users} = require("../data/users.json"); // Importing users data from JSON file
 // we are importing users data here because we might need to check which books are issued to which users
+
+const {UserModel, BookModel} = require("../models/index"); // Importing the User and Book models from the models' index.js file
+// we are importing the models here because we might need to interact with the database to get or update book and user details
+//const UserModel = require("../models/user-models"); // Importing the User model from user-models.js file
+//const BookModel = require("../models/book-models"); // Importing the Book model from book-models.js file
 
 const router = express.Router(); // Creating a new router instance for book routes, this is done because we are creating routes in this file
 // Vimp: we use express.Router() to create a new router object that can handle routes separately from the main app
@@ -16,14 +24,18 @@ const router = express.Router(); // Creating a new router instance for book rout
 * Parameters: None    //no parameters needed to get all books
  */
 
-router.get("/", (req, res) => {   // if url ends with /books , this route handler will be called
+router.get("/", getAllBooks);   // if url ends with /books , this route handler will be called
+// we are using the getAllBooks function from the book-controller.js file as the route handler for this route, this is done to keep the code organized and maintainable, as we can keep all the logic related to getting all books in the controller file, and just call that function here in the route file.
+//NOTE: we are not writing the logic for getting all books here in the route file, because we want to keep the route file clean and organized, and we want to separate the concerns of routing and business logic, so we write the business logic in the controller file and just call that function here in the route file.
+
+/* router.get("/", (req, res) => {   // if url ends with /books , this route handler will be called
   // Route handler for GET /books
   res.status(200).json({        // Sending a JSON response with status 200
     success: true,
     message: "Got all books",
     data: books // Sending the books data as response
   });
-});
+}); */
 
 /************************************************** */
 
@@ -35,6 +47,11 @@ router.get("/", (req, res) => {   // if url ends with /books , this route handle
 * Parameters: id    //parameter needed to get a specific book
  */
 
+router.get("/:id", getSingleBookById);   // if url ends with /books/:id , this route handler will be called
+// we are using the getSingleBookById function from the book-controller.js file as the route handler for this route, this is done to keep the code organized and maintainable, as we can keep all the logic related to getting a single book by ID in the controller file, and just call that function here in the route file.
+//NOTE: we are not writing the logic for getting a single book by ID here in the route file, because we want to keep the route file clean and organized, and we want to separate the concerns of routing and business logic, so we write the business logic in the controller file and just call that function here in the route file.
+
+/* 
 router.get("/:id", (req, res) => {   // if url ends with /books/:id , this route handler will be called
   // Route handler for GET /books/:id
   const { id } = req.params; // Extracting the book ID from the request parameters
@@ -57,7 +74,8 @@ router.get("/:id", (req, res) => {   // if url ends with /books/:id , this route
     data: book,          // Sending the found book data as response
   });
 
-});
+}); */
+
 /************************************************** */
 /****VIMP: GET ALL ISSUED BOOKS ***** */
 /*
@@ -68,6 +86,11 @@ router.get("/:id", (req, res) => {   // if url ends with /books/:id , this route
 * Parameters: none   //parameter not needed to get all issued books
  */
 
+router.get("/issued/by-user", getAllIssuedBooks);   // if url ends with /books/issued/by-user , this route handler will be called
+// we are using the getAllIssuedBooks function from the book-controller.js file as the route handler for this route, this is done to keep the code organized and maintainable, as we can keep all the logic related to getting all issued books in the controller file, and just call that function here in the route file.
+//NOTE: we are not writing the logic for getting all issued books here in the route file, because we want to keep the route file clean and organized, and we want to separate the concerns of routing and business logic, so we write the business logic in the controller file and just call that function here in the route file.
+
+/* 
 router.get("/issued/by-user", (req, res) => {   // if url ends with /books/issued/by-user , this route handler will be called
   // Route handler for GET /books/issued
   // Filtering the books array to get only the issued books
@@ -103,7 +126,7 @@ router.get("/issued/by-user", (req, res) => {   // if url ends with /books/issue
         data: issuedBooks, // Sending the issued books data as response
     });
 });
-
+ */
 /************************************************** */
 /*
 * Route: /                 //route to create a new book

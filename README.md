@@ -114,4 +114,34 @@ class.indexOf("seven")
 
 
 *************************
-MVC Arch => Controllers
+MVC Architecture => Controllers
+    >> M: Model (It depicts the structure of MongoDb collections)
+    >> V: View (wrt frontend (react js))
+    >> C: Controllers (Brain or logical part of a route)
+          >> books.controllers.js
+          >> users.controllers.js
+
+Schema >> contains the constraints
+  id: String
+  name: String
+  age: Number
+  Gender: char || varchar(15)
+
+model >>  contains the values
+  id: 123
+  name: devtown
+  age: 23
+  gender: 'M'
+
+
+## Foreign Key:
+>> Referential Integrity
+
+Users Table                            Books Table
+issuedBoo: 2(Foreign key here)         issuedBook: 2 (Primary key)
+
+
+
+
+
+

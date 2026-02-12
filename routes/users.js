@@ -3,6 +3,12 @@ const { users } = require("../data/users.json"); // Importing users data from JS
 const router = express.Router(); // Creating a new router instance for user routes, this is done because we are creating routes in this file
 // Vimp: we use express.Router() to create a new router object that can handle routes separately from the main app
  
+
+const {UserModel, BookModel} = require("../models/index"); // Importing the User and Book models from the models' index.js file
+// we are importing the models here because we might need to interact with the database to get or update book and user details
+//const UserModel = require("../models/user-models"); // Importing the User model from user-models.js file
+//const BookModel = require("../models/book-models"); // Importing the Book model from book-models.js file
+
 /********************************************** */
 /*
 * Route: /                 //route to get all users

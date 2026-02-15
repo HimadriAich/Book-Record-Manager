@@ -1,7 +1,7 @@
 const express = require("express");
 const {books} = require("../data/books.json"); // Importing books data from JSON file
 
-const {getAllBooks, getSingleBookById, getAllIssuedBooks} = require("../controllers/book-controller"); // Importing these function from book-controller.js file
+const {getAllBooks, getSingleBookById, getAllIssuedBooks, addNewBook, updateBookById} = require("../controllers/book-controller"); // Importing these function from book-controller.js file
 
 
 const {users} = require("../data/users.json"); // Importing users data from JSON file
@@ -137,6 +137,11 @@ router.get("/issued/by-user", (req, res) => {   // if url ends with /books/issue
 * Data : id, name, author, genre, price, publisher  //data needed to create a new book 
  */
 
+router.post("/", addNewBook);   // if url ends with /books , this route handler will be called
+// we are using the addNewBook function from the book-controller.js file as the route handler for this route, this is done to keep the code organized and maintainable, as we can keep all the logic related to creating a new book in the controller file, and just call that function here in the route file.
+//NOTE: we are not writing the logic for creating a new book here in the route file, because we want to keep the route file clean and organized, and we want to separate the concerns of routing and business logic, so we write the business logic in the controller file and just call that function here in the route file.
+
+/* 
 router.post("/", (req, res) => {   // if url ends with /books , this route handler will be called
   // Route handler for POST /books
   const { data } = req.body || {};   // Extracting the book data from the request body
@@ -170,6 +175,9 @@ router.post("/", (req, res) => {   // if url ends with /books , this route handl
     data: allBooks // Sending the updated books data as response
   })
 });
+ */
+
+
 
 /*********VIMP: UPDATE BOOK BY ID***************************************** */
 
@@ -182,6 +190,11 @@ router.post("/", (req, res) => {   // if url ends with /books , this route handl
 * Data : id, name, author, genre, price, publisher  //data needed to update a new book 
  */
 
+router.put("/updateBook/:id", updateBookById);   // if url ends with /books/updateBook/:id , this route handler will be called
+// we are using the updateBookById function from the book-controller.js file as the route handler for this route, this is done to keep the code organized and maintainable, as we can keep all the logic related to updating a book by ID in the controller file, and just call that function here in the route file.
+//NOTE: we are not writing the logic for updating a book by ID here in the route file, because we want to keep the route file clean and organized, and we want to separate the concerns of routing and business logic, so we write the business logic in the controller file and just call that function here in the route file.
+
+/* 
 router.put("/updateBook/:id", (req,res) => {   // if url ends with /books/:id , this route handler will be called
   // Route handler for PUT /books/:id
   const { id } = req.params; // Extracting the book ID from the request parameters
@@ -214,7 +227,7 @@ router.put("/updateBook/:id", (req,res) => {   // if url ends with /books/:id , 
         message: "Book updated successfully",
         data: updateData // Sending the updated books data as response
     });
-});
+}); */
 /************************************************** */
 
 module.exports = router; // Exporting the router to be used in other files

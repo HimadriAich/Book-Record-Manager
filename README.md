@@ -141,7 +141,25 @@ Users Table                            Books Table
 issuedBoo: 2(Foreign key here)         issuedBook: 2 (Primary key)
 
 
+***********************************************
+DTO (Data Transfer Object)- passing of data from one object to another
 
+var obj1: {
+  name
+  age
+  id
+  gender
+}
 
+  ||
+  ||
+  DTO
+  ||
+  ||
 
-
+var obj2: {
+  name
+  age
+  id
+  gender
+}

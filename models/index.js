@@ -5,8 +5,8 @@ const BookModel = require('./book-models'); // importing the book model
 
 
 module.exports = {
-    User: UserModel, // exporting the user model 
-    Book: BookModel, // exporting the book model
+    UserModel, // exporting the user model 
+    BookModel, // exporting the book model
 };
 
 // now we can directly call this index.js file in our controllers to

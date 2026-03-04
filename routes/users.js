@@ -1,10 +1,13 @@
 const express = require("express");
 const { users } = require("../data/users.json"); // Importing users data from JSON file
+
+const {getAllUsers, getSingleUserById, createNewUSer, updateUserById, deleteUserById, getSubscriptionDetailsById} = require("../controllers/user-controller.js"); // Importing the getAllUsers function from user-controller.js file
+
 const router = express.Router(); // Creating a new router instance for user routes, this is done because we are creating routes in this file
 // Vimp: we use express.Router() to create a new router object that can handle routes separately from the main app
  
 
-const {UserModel, BookModel} = require("../models/index"); // Importing the User and Book models from the models' index.js file
+const {UserModel, BookModel} = require("../models/index.js"); // Importing the User and Book models from the models' index.js file
 // we are importing the models here because we might need to interact with the database to get or update book and user details
 //const UserModel = require("../models/user-models"); // Importing the User model from user-models.js file
 //const BookModel = require("../models/book-models"); // Importing the Book model from book-models.js file
@@ -19,13 +22,17 @@ const {UserModel, BookModel} = require("../models/index"); // Importing the User
  */
 
 // http://localhost:8081/users
+
+router.get("/", getAllUsers); 
+
+/* 
 router.get("/", (req, res) => {   // if url ends with /users , this route handler will be called
   // Route handler for GET /users
   res.status(200).json({
     success: true,
     data: users, // Sending the users data as response
   });
-});
+}); */
 
 //********************************************** */
 /* http://localhost:8081/users/2
@@ -36,6 +43,9 @@ router.get("/", (req, res) => {   // if url ends with /users , this route handle
 * Parameters: id    //parameter needed to get a specific user
  */
 
+router.get("/:id", getSingleUserById); // Vimp: here we are using the getSingleUserById function from the user-controller.js file to handle this route, we can also write the logic here itself but it's better to keep the logic in the controller file to keep the code organized and maintainable
+
+/* 
 router.get("/:id", (req, res) => {  // if url ends with /users/:id , this route handler will be called
   // Route handler for GET /users/:id
   // const id = req.params.id;  // Extracting(requesting) the 'id' parameter from the request URL
@@ -63,7 +73,8 @@ router.get("/:id", (req, res) => {  // if url ends with /users/:id , this route 
     data: user          // Sending the found user data as response
   });
 }
-});
+}); */
+
 
 //********************************************** */
 /* 
@@ -75,7 +86,11 @@ router.get("/:id", (req, res) => {  // if url ends with /users/:id , this route 
 
 We need to pass the fields such as id, name, etc in the body of the POST request in json format
  */
-router.post("/", (req, res) => {    // Route handler for POST /users
+
+
+router.post("/", createNewUSer); // Vimp: here we are using the createNewUser function from the user-controller.js file to handle this route, we can also write the logic here itself but it's better to keep the logic in the controller file to keep the code organized and maintainable
+ 
+/* router.post("/", (req, res) => {    // Route handler for POST /users
   
     const {id, name, age, surname, email, subscriptionType, subscriptionDate} = req.body; // Extracting user details from the request body
 //req.body simply means that we are accessing the body of the request where the user details are sent in JSON format
@@ -103,7 +118,9 @@ router.post("/", (req, res) => {    // Route handler for POST /users
         message: "User created successfully",
         data: users,   // Sending the updated users array as response
     });
-});
+});  */
+
+
 /************************************************** */
 
 /*  UPDATE USER INFO USING ID - PUT REQUEST  
@@ -113,6 +130,10 @@ router.post("/", (req, res) => {    // Route handler for POST /users
 * Access: Public         // no authentication needed
 * Parameters: none   //no parameters needed to update a user's information
 */
+
+router.put("/:id", updateUserById);
+
+/* 
 router.put("/:id", (req, res) => {   // Route handler for PUT /users/:id
 
     const { id } = req.params; // Extracting the 'id' parameter from the request URL
@@ -147,7 +168,9 @@ router.put("/:id", (req, res) => {   // Route handler for PUT /users/:id
         message: "User updated successfully!!",
         data: updateUserData,
     });
-});
+}); */
+
+
 /******************************************* */
 
 /*  DELETE USER USING ID - DELETE REQUEST  
@@ -158,6 +181,9 @@ router.put("/:id", (req, res) => {   // Route handler for PUT /users/:id
 * Parameters: none   //no parameters needed to delete a user's information
 */
 
+router.delete("/:id", deleteUserById);   // Vimp: here we are using the deleteUser function from the user-controller.js file to handle this route, we can also write the logic here itself but it's better to keep the logic in the controller file to keep the code organized and maintainable
+
+/* 
 router.delete("/:id", (req, res) => {   // Route handler for DELETE /users/:id
 
     const { id } = req.params; // Extracting the 'id' parameter from the request URL
@@ -181,7 +207,8 @@ router.delete("/:id", (req, res) => {   // Route handler for DELETE /users/:id
         message: "User deleted successfully!!",
         data: users,   // Sending the updated users array as response
     });
-  });
+  }); */
+
 /************************************************* */
 /*  VERY IMPORTANT- GET ALL USER SUBSCRIPTION DETAILS  
 * Route: /users/subscription-details/:id                //  route to get a user's subscription details by ID
@@ -191,6 +218,11 @@ router.delete("/:id", (req, res) => {   // Route handler for DELETE /users/:id
 * Parameters: id   //parameter needed to get a user's subscription details
 */
 
+
+router.get('/subscription-details/:id', getSubscriptionDetailsById); // Vimp: here we are using the getSubscriptionDetailsById function from the user-controller.js file to handle this route, we can also write the logic here itself but it's better to keep the logic in the controller file to keep the code organized and maintainable
+
+
+/* 
 router.get("/subscription-details/:id", (req, res) => {   // Route handler for GET /users/subscription-details/:id
 
     const { id } = req.params; // Extracting the 'id' parameter from the request URL, curly braces used for destructuring(means extracting specific value from an object)
@@ -259,6 +291,6 @@ router.get("/subscription-details/:id", (req, res) => {   // Route handler for G
         message: "User subscription details fetched successfully!!",
         data: dt,   // Sending the subscription details as response
     });
-});
+}); */
 /************************************************* */
   module.exports = router;   // Exporting the router to be used in other files
